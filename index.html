@@ -9,6 +9,18 @@
         }
     </style>
 </head>
+
+    <meta name="referrer" content="unsafe-url"/>
+
+<script>
+    delete window.document.referrer;
+    window.document.__defineGetter__('referrer', function () {
+        console.info('set referrer');
+        return "http://localhost:8086";
+    });
+
+    console.info(document.referrer);
+</script>
 <body>
 <h3>Simulate POST Request. Filtered notifications. It should be blocked.</h3>
 <form id="postForm">
