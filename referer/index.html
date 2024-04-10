@@ -1,0 +1,32 @@
+<html>
+
+<meta name="referrer" content="unsafe-url"/>
+
+<script>
+
+    delete window.document.referrer;
+
+    window.document.__defineGetter__('referrer', function () {
+        console.info('set referrer');
+        return "https://dev.capcade.com";
+    });
+
+    console.info(document.referrer);
+</script>
+
+<body>
+
+<form id="c1" enctype="text/plain" method="POST"
+      action="https://api.dev.capcade.com/task/taskBoards/09fdcf0e49a04461a89a7796e34d223a/tasks">
+    <input type="submit" value="hit tasks">
+</form>
+
+
+<form id="c2" enctype="text/plain" method="POST"
+      action="https://api.dev.capcade.com/secured/notifications/filtered">
+    <input type="submit" value="hit notification">
+</form>
+
+
+</body>
+</html>
