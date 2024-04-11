@@ -3,75 +3,16 @@
     <meta charSet="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simulate POST Request</title>
-    <style>
-        #postForm *:not(button[type="submit"]) {
-            display: none;
-        }
-    </style>
 </head>
-
-    <meta name="referrer" content="unsafe-url"/>
-
-<script>
-    delete window.document.referrer;
-    window.document.__defineGetter__('referrer', function () {
-        console.info('set referrer');
-        return "http://localhost:8086";
-    });
-
-    console.info(document.referrer);
-</script>
 <body>
 <h3>Simulate POST Request. Filtered notifications. It should be blocked.</h3>
-<form id="postForm">
-    <!-- Hidden input fields for 'from' and 'size' -->
-    <input type="hidden" id="from" name="from" value="0">
-    <input type="hidden" id="size" name="size" value="10">
-    <!-- Input fields or select dropdowns for 'dateCreatedFilter' -->
-    <label for="dateCreatedFilter">Date Created Filter:</label>
-    <select id="dateCreatedFilter" name="dateCreatedFilter">
-        <option value="Any">Any</option>
-        <!-- Add more options as needed -->
-    </select>
-
-    <button type="submit">Filtered notifications</button>
+<form id="postForm" action="http://localhost:8086/secured/notifications/filtered" method="post">
+    <!-- Form fields -->
+    <input type="submit" value="Filtered notification">
 </form>
 <br><br><br>
 <h3>Simulate GET Request. Get logged user. It should work on Lax. Fail on Strict.</h3>
 <a href="http://localhost:8086/secured/user/loggedUserInfo">Get logged user</a>
 
-<script>
-    document.getElementById('postForm').addEventListener('submit', function (event) {
-        event.preventDefault();
-
-        const formData = new FormData(this);
-        const strings = [];
-        formData.forEach((value) => {
-            strings.push(value);
-        });
-
-        // Simulate POST request
-        fetch('http://localhost:8086/secured/notifications/filtered', {
-            method: 'POST',
-            credentials: "include",
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(strings)
-        })
-            .then(response => {
-                if (response.ok) {
-                    return response.text();
-                }
-                throw new Error('Network response was not ok.');
-            })
-            .then(data => {
-                console.log(data);
-            })
-            .catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
-            });
-    });
-</script>
 </body>
 </html>
